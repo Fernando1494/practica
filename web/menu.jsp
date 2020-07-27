@@ -14,8 +14,8 @@
     <body>
         <h1>MENU</h1>
        <a href="datosestudiante.jsp"> 1. datos del estudiante</a>
-        <a href="datosestudiante.jsp">2. datos del curso</a>
-        <a href="datosestudiante.jsp">3. Datos de la Carrera</a>
-        <a href="datosestudiante.jsp">3. Datos de la Matricula</a>
+        <a href="datoscurso.jsp">2. datos del curso</a>
+        <a href="datoscarrera.jsp">3. Datos de la Carrera</a>
+        <a href="datosmatricula.jsp">3. Datos de la Matricula</a>
     </body>
 </html>
