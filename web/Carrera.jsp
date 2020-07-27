@@ -23,7 +23,7 @@
             String s_idcarrera;
             String s_nomcarrera;
             String s_estado;
-            String s_cordinador;
+            String s_coordinador;
              String s_semestres;
               
              
@@ -40,7 +40,7 @@
                 s_idcarrera = request.getParameter("f_idcarrera");
                 // Primera parte del modificar
                 if (s_accion!=null && s_accion.equals("M1")) {
-                    consulta =  "   select idcarrera, nomcarreara, estado,cordinador, drmrdtres "
+                    consulta =  "   select nomcarrera, coordinador, estado, semestres "
                                 + " from carrera  "
                                 + " where  "
                                 + " id_carrera =  " + s_idcarrera;
@@ -51,11 +51,11 @@
                             
                         
                     %>    
-                <form name="EditarcarreraForm" action="datoscarrera.jsp" method="GET">
+                <form name="EditarcarreraForm" action="Carrera.jsp" method="GET">
                     <table border="0" align="center">
                         <thead>
                             <tr>
-                                <th colspan="2">Editar curso</th>
+                                <th colspan="2">Editar Carrera</th>
 
                             </tr>
                         </thead>
@@ -65,16 +65,16 @@
                                 <td><input type="text" name="f_nomcarrera" value="<% out.print(rs.getString(1)); %>" maxlength="30" size="25" /></td>
                             </tr>
                             <tr>
-                                <td>Cordinador:</td>
-                                <td><input type="text" name="f_cordinador" value="<% out.print(rs.getString(2)); %>" maxlength="40" size="25"/></td>
+                                <td>Coordinador:</td>
+                                <td><input type="text" name="f_coordinador" value="<% out.print(rs.getString(2)); %>" maxlength="40" size="25"/></td>
                             </tr>
                             <tr>
                                 <td>Estado: </td>
-                                <td><input type="text" name="f_estado" value="<% out.print(rs.getString(3)); %>" maxlength="8" size="8" /></td>
+                                <td><input type="text" name="f_estado" value="<% out.print(rs.getString(3)); %>" maxlength="2" size="2" /></td>
                             </tr>
                             <tr>
                                 <td>Semestre: </td>
-                                <td><input type="text" name="f_semestres" value="<% out.print(rs.getString(4)); %>" maxlength="12" size="15" /></td>
+                                <td><input type="text" name="f_semestres" value="<% out.print(rs.getString(4)); %>" maxlength="4" size="2" /></td>
                             </tr>
                            
                             <tr align="center">
@@ -96,7 +96,7 @@
                 // formulario de agregar estudiante
 
         %>
-        <form name="AgregarcarreraForm" action="datoscarrera.jsp" method="GET">
+        <form name="AgregarcarreraForm" action="Carrera.jsp" method="GET">
             <table border="0" align="center" class="ecologico" style="margin: auto; display: table">
                 <thead>
                     <tr>
@@ -107,11 +107,11 @@
                 <tbody>
                     <tr>
                         <td>Nombre de Carrera:</td>
-                        <td><input type="text" name="f_nombre" value="" maxlength="30" size="25" /></td>
+                        <td><input type="text" name="f_nomcarrera" value="" maxlength="30" size="25" /></td>
                     </tr>
                     <tr>
-                        <td>Cordinador:</td>
-                        <td><input type="text" name="f_cordinador" value="" maxlength="40" size="25"/></td>
+                        <td>Coordinador:</td>
+                        <td><input type="text" name="f_coordinador" value="" maxlength="40" size="25"/></td>
                     </tr>
                     <tr>
                         <td>Estado </td>
@@ -119,7 +119,7 @@
                     </tr>
                     <tr>
                         <td>Semestre: </td>
-                        <td><input type="text" name="f_semestres" value="" maxlength="12" size="15" /></td>
+                        <td><input type="text" name="f_semestres" value="" maxlength="2" size="2" /></td>
                     </tr>
                     
                     <tr align="center">
@@ -147,7 +147,7 @@
                 <tr>
                     <th>#</th>
                     <th>Nombre</th>
-                    <th>Cordinador</th>
+                    <th>Coordinador</th>
                     <th>Estado</th>
                     <th>Semestre</th>
                   
@@ -164,24 +164,24 @@
                     
                     // Ejecutar la eliminación de estudiantes
                     if (s_accion.equals("E")) {
-                            consulta =    " delete from curso "
+                            consulta =    " delete from carrera "
                                         + " where  "
-                                        + " id_curso = " + s_idcarrera +" ; ";
-                            //out.print(consulta);
+                                        + " id_carrera = " + s_idcarrera +" ; ";
+                            out.print(consulta);
                             pst = cn.prepareStatement(consulta);
                             pst.executeUpdate();
                     // Sino se elimina registros de estudiantes, 
                     // Pregunta si se va a REGISTRAR UN NUEVO ESTUDIANTE
                     }else if(s_accion.equals("C")){
-                            s_nomcarrera = request.getParameter("f_nombcarrera");
-                            s_cordinador = request.getParameter("f_cordinador");
+                            s_nomcarrera = request.getParameter("f_nomcarrera");
+                            s_coordinador = request.getParameter("f_coordinador");
                             s_estado = request.getParameter("f_estado");
                             s_semestres = request.getParameter("f_semestres");
                            
                             
                             consulta =    " insert into "
-                                        + " curso (nombre, semestre, estado, cordinador )"
-                                        + " values('"+ s_nomcarrera +"','"+ s_semestres +"','"+ s_estado +"','"+ s_cordinador +"',' ');  ";
+                                        + " carrera (nomcarrera, coordinador, estado, semestres  )"
+                                        + " values('"+ s_nomcarrera +"','"+ s_coordinador +"','"+ s_estado +"','"+ s_semestres +"');  ";
                             //out.print(consulta);
                             pst = cn.prepareStatement(consulta);
                             pst.executeUpdate();
@@ -189,16 +189,16 @@
                     // Pregunta si va a hacer la MODIFICACIÓN DE ESTUDIANTES - Parte 2
                     }else if (s_accion.equals("M2")) {
                             s_nomcarrera = request.getParameter("f_nomcarrera");
-                            s_cordinador = request.getParameter("f_cordinador");
+                            s_coordinador = request.getParameter("f_coordinador");
                             s_estado = request.getParameter("f_estado");
                              s_semestres = request.getParameter("f_semestres ");
                            
-                            consulta =  "   update curso  "
+                            consulta =  "   update carrera  "
                                         + " set  "
-                                        + " nombre = '"+ s_nomcarrera +"', "
-                                        + " codigo = '" + s_cordinador + "', "
+                                        + " nomcarrera = '"+ s_nomcarrera +"', "
+                                        + " coordinador = '" + s_coordinador + "', "
                                         + " estado = '" + s_estado + "', "
-                                        + " horas = '" + s_semestres + "', "
+                                        + " semestres = '" + s_semestres + "', "
                                         + " where  "
                                         + " id_carrera = " + s_idcarrera + "; ";
                             //out.print(consulta);
@@ -209,8 +209,8 @@
                 }
                 
                 
-                consulta= " Select id_carrera, nomcarrera, cordinador, estado, semestre  "
-                        + " from carrrera ";
+                consulta= " Select id_carrera, nomcarrera, coordinador, estado, semestres  "
+                        + " from carrera ";
                 //out.print(consulta);
                 pst = cn.prepareStatement(consulta);
                 rs = pst.executeQuery();
@@ -225,10 +225,9 @@
                         <td><%out.print(rs.getString(2));%></td>
                         <td><%out.print(rs.getString(3));%></td>
                         <td><%out.print(rs.getString(4));%></td>
-                        <td><%out.print(rs.getString(5));%></td>
-                        <td><%out.print(rs.getString(6));%></td>
-                        <td><a href="datoscarrera.jsp?f_accion=E&f_idcarrera=<%out.print(ide);%>">Eliminar</a></td>
-                        <td><a href="datoscarrera.jsp?f_accion=M1&f_idcarrera=<%out.print(ide);%>">Editar</a></td>
+                        <td><%out.print(rs.getString(5));%></td>                
+                        <td><a href="Carrera.jsp?f_accion=E&f_idcarrera=<%out.print(ide);%>">Eliminar</a></td>
+                        <td><a href="Carrera.jsp?f_accion=M1&f_idcarrera=<%out.print(ide);%>">Editar</a></td>
                         
                     </tr>                    
                     <%
